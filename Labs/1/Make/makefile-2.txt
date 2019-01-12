@@ -1,15 +1,23 @@
-PROG=	test
-OBJS=	one.o main.o two.o three.o
-CFLAGS=	-Wall -g
+#setting variables
+PROG=	test #Program name is test
+OBJS=	one.o main.o two.o three.o #objects needed to compile
+CFLAGS=	-Wall -g #compilation flags
 
+#default entry compiles program
 all: ${PROG}
 
+#compiles program declares objs as dependencies to compile
 ${PROG}: ${OBJS}
+#prints to terminal
 	@echo $@ depends on $?
+#compiler flags dependencies output name
 	${CC} ${LDFLAGS} ${OBJS} -o ${PROG}
-
+#.c and .o files
 .c.o:
+#compile .c to .o with flags
 	$(CC) -c $(CFLAGS) -o $@ $<
 	
+#cleans the directory
 clean:
+#removes program and object (.o) files
 	rm -f ${PROG} ${OBJS}

@@ -1,15 +1,22 @@
+#sets variables
 PROG=	test
 OBJS=	one.o main.o two.o three.o
 #CFLAGS=	-Wall -g
 
+#default entry point
 all: ${PROG}
 
+#compiles program with dependencies
 ${PROG}: ${OBJS}
 	@echo $@ depends on $?
+#actually compiles
 	${CC} ${LDFLAGS} ${OBJS} -o ${PROG}
 
+#defines how to handle .o files 
 %.o: %.c ext.h one.h
+#compiles c using flags output is the input .o dependency file with input being input file with .c instead of .o
 	$(CC) -c $(CFLAGS) -o $@ $<
 
+#cleans dir
 clean:
 	rm -f ${PROG} ${OBJS}

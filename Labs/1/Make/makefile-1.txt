@@ -1,23 +1,39 @@
 # Run 'make', then 'touch one.h' and 'make' again.
 
+#sets variable CC to cc which is used as compiler
 CC=cc
 
+
+#Default entry, calls "one" function
 all: one
 
+
+#builds one, sets dependencies
 one: one.o main.o two.o three.o
+#command to run after dependencies run
 	${CC} one.o main.o two.o three.o -o one
 
+#builds one.o sets dependencies
 one.o: ext.h one.h one.c
+#command to run after dependencies run
 	${CC} -c one.c
 
+#builds main.o sets dependencies
 main.o: ext.h one.h main.c
+#command to run after dependencies run
 	${CC} -c main.c
 
+#builds two.o sets dependencies
 two.o: one.h two.c
+#command to run after dependencies run
 	${CC} -c two.c
 
+#builds three.o sets dependencies
 three.o: one.h three.c
+#command to run after dependencies run
 	${CC} -c three.c
 
+#run with make clean
 clean:
+#removes all files with .o (needed for build but nothing not for anything later)
 	rm -f one *.o

@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct ELE
+{
+	int data, id;
+	struct ELE *prev;
+	struct ELE *next;
+} list_ele, *list_ptr;
+
+
+list_ele nodes[10];
+list_ptr head;
+
+
+list_ptr new(){
+	int i = 0;
+	while(i<10){
+		if(nodes[i].data == -1){
+			return &nodes[i];
+		}
+		i++;
+	}
+	return NULL;
+
+}
+
+void delete(int value){
+	list_ptr t = head;
+	while(t != NULL){
+		if(t->data == value){
+			t->data = NULL;
+			(t->prev)->next = t->next;
+			(t->next)->prev = t->prev;
+		}
+		t = t->next;
+	}
+}
+
+void insert(int value){
+	list_ptr temp = new();
+	if(temp == NULL){
+		return;
+	}else if(head == NULL){
+		temp->data = value;
+		head = temp;
+		head->next = NULL;
+		head ->prev = NULL;
+	}else{//check case where largest
+		temp->data = value;
+		list_ptr trav = head;
+		while(trav != NULL && trav->data < value){
+			(trav->prev)->next = temp;
+			temp->prev = trav->prev;
+			temp->next = trav;
+			trav->prev = temp;
+		}
+	}
+}
+
+void show(){
+	list_ptr trav = head;
+	while(trav != NULL){
+		printf("ID: %d \t Data: %d", trav->id, trav->data);
+		trav = trav->next;
+	}
+}
+
+void parseInput(char *buffer, char *op, int *value){
+	char** temp;
+	*op= *buffer;
+	
+	*value = strtol(buffer[2], temp, 10);
+
+}
+
+int main(void){
+	for(int i = 0; i < 10; i++){
+		nodes[i].id = i;
+		nodes[i].data = NULL;
+	}
+	char* buffer[100];
+	char op;
+	int value;
+
+	insert(10);
+	insert(5);
+	show();
+
+/*	printf("Command Value\n");
+	fgets(buffer, sizeof(buffer), stdin);
+	parseInput(buffer, &op, &value);
+	while(op != 'Q'){
+		fgets(buffer, sizeof(buffer), stdin);
+		parseInput(buffer, &op, &value);
+	}
+*/	return 0;
+
+}

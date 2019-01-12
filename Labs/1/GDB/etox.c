@@ -41,7 +41,7 @@ int factorial (number)
 int number;
  {
   int j;
-  int fact = 0;
+  int fact = 1;
 
   for (j = 1; j <= number; j++)
    {

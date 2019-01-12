@@ -1,13 +1,20 @@
+#sets variables
+#program names
 PROG=	test
+#declares dependencies
 OBJS=	one.o main.o two.o three.o
-
+#declares flags for c compiler
 CFLAGS=	-Wall -g
 
+#default entry compiles program
 all: ${PROG}
 
+#compiles program sets dependencies
 ${PROG}: ${OBJS}
 	@echo $@ depends on $?
+#compile program
 	${CC} ${LDFLAGS} ${OBJS} -o ${PROG}
 
+#cleans dir
 clean:
 	rm -f ls *.o

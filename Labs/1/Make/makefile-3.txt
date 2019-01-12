@@ -1,13 +1,20 @@
-PROG=	test
-OBJS=	one.o main.o two.o three.o
+#sets variable
+PROG=	test #program name
+OBJS=	one.o main.o two.o three.o #program dependencies
 
 #CFLAGS=	-Wall -g
 
+#default entry compiles program
 all: ${PROG}
 
+#compiles program sets dependencies
 ${PROG}: ${OBJS}
+#prints to terminal
 	@echo $@ depends on $?
+#compile with flags using dependencies to output name
 	${CC} ${LDFLAGS} ${OBJS} -o ${PROG}
 
+#cleans directory of .o files
 clean:
+#the ls is useless
 	rm -f ls *.o
