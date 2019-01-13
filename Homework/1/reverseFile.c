@@ -19,6 +19,7 @@ int main(int argc, char *argv[]){
 	lineNode *head = (lineNode *) malloc(sizeof(lineNode));
 	if(!head){
 		printf("Could not get memory");
+		return 3;
 	}
 
 	
@@ -30,6 +31,10 @@ int main(int argc, char *argv[]){
 	
 	while(fgets(head->line, BUFFER_SIZE, file)){
 		lineNode *temp = (lineNode *) malloc(sizeof(lineNode));
+		if(!temp){
+			printf("Could not get memory");
+			return 3;
+		}
 		temp->next = head;
 		head = temp;
 	}
@@ -41,7 +46,7 @@ int main(int argc, char *argv[]){
 		free(head);
 		head = temp;
 	}
-
+	
 	return 0;
 }
 
