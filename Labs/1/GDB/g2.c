@@ -5,7 +5,8 @@ int main ()
  {
   char * buf;
   int num;
-  num = 1 << 31;
+  //left shift one less so num isn't negative
+  num = 1 << 30;
   buf = malloc(num) ;
   fgets (buf, 1024, stdin) ;
   printf ("%s\n", buf) ;

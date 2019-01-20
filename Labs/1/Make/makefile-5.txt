@@ -19,4 +19,5 @@ ${PROG}: ${OBJS}
 
 #cleans dir
 clean:
+#may or may not want to remove executable
 	rm -f ${PROG} ${OBJS}

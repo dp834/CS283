@@ -41,6 +41,7 @@ int factorial (number)
 int number;
  {
   int j;
+  //changed starting value, factorial of 0 is 1 
   int fact = 1;
 
   for (j = 1; j <= number; j++)

@@ -15,9 +15,12 @@ ${PROG}: ${OBJS}
 #.c and .o files
 .c.o:
 #compile .c to .o with flags
+#$@ is the filename of thing that called this in this case all OBJS will go through here
+#$< first dependency of the OBJ running right now
 	$(CC) -c $(CFLAGS) -o $@ $<
 	
 #cleans the directory
 clean:
 #removes program and object (.o) files
+#maybe you don't want to remove executable
 	rm -f ${PROG} ${OBJS}

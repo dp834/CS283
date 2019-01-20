@@ -15,6 +15,10 @@ ${PROG}: ${OBJS}
 #compile program
 	${CC} ${LDFLAGS} ${OBJS} -o ${PROG}
 
+#.c.o is implied again
+
 #cleans dir
 clean:
+#again ls is pointless
+#if you want to remove exe
 	rm -f ls *.o

@@ -1,0 +1,161 @@
+dmp394@tux5 ~/CS283/Git/Labs/1/help/
+$ echo "keeps printing first character entered"
+keeps printing first character entered
+dmp394@tux5 ~/CS283/Git/Labs/1/help/
+$ gdb a.out
+GNU gdb (Ubuntu 8.1-0ubuntu3) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from a.out...done.
+(gdb) l
+1       #include <ctype.h>
+2       #include <stdio.h>
+3
+4       int main ()
+5        {
+	6         char c;
+	7         c = fgetc (stdin) ;
+	8         while (c != EOF)
+	9         if (isalnum (c) )
+	10         printf ("%c\n", c) ;
+	(gdb) l 100
+	Line number 95 out of range; g1.c has 13 lines.
+	(gdb) l 13
+	8         while (c != EOF)
+	9         if (isalnum (c) )
+	10         printf ("%c\n", c) ;
+	11        c = fgetc (stdin) ;
+	12        return(1);
+	13       }
+	(gdb) l
+	Line number 14 out of range; g1.c has 13 lines.
+	(gdb) l1
+	Undefined command: "l1".  Try "help".
+	(gdb) l 1
+	1       #include <ctype.h>
+	2       #include <stdio.h>
+	3
+	4       int main ()
+	5        {
+		6         char c;
+		7         c = fgetc (stdin) ;
+		8         while (c != EOF)
+		9         if (isalnum (c) )
+		10         printf ("%c\n", c) ;
+		(gdb) n
+		The program is not being run.
+		(gdb) break main
+		Breakpoint 1 at 0x742: file g1.c, line 7.
+		(gdb) run
+		Starting program: /home2/home-d/dmp394/CS283/Git/Labs/1/help/a.out
+
+		Breakpoint 1, main () at g1.c:7
+		7         c = fgetc (stdin) ;
+		(gdb) l
+		2       #include <stdio.h>
+		3
+		4       int main ()
+		5        {
+			6         char c;
+			7         c = fgetc (stdin) ;
+			8         while (c != EOF)
+			9         if (isalnum (c) )
+			10         printf ("%c\n", c) ;
+			11        c = fgetc (stdin) ;
+			(gdb) display c
+			1: c = 0 '\000'
+			(gdb) n
+			asdf
+			8         while (c != EOF)
+			1: c = 97 'a'
+			(gdb) m
+			Ambiguous command "m": macro, maintenance, make, mem, monitor, mt.
+			(gdb) n
+			9         if (isalnum (c) )
+			1: c = 97 'a'
+			(gdb) n
+			10         printf ("%c\n", c) ;
+			1: c = 97 'a'
+			(gdb) n
+			a
+			8         while (c != EOF)
+			1: c = 97 'a'
+			(gdb) print isalnum(a)
+			No symbol "a" in current context.
+			(gdb) print isalnum(c)
+			$1 = 8
+			(gdb) n
+			9         if (isalnum (c) )
+			1: c = 97 'a'
+			(gdb) n
+			10         printf ("%c\n", c) ;
+			1: c = 97 'a'
+			(gdb) n
+			a
+			8         while (c != EOF)
+			1: c = 97 'a'
+			(gdb) n
+			9         if (isalnum (c) )
+			1: c = 97 'a'
+			(gdb) n
+			10         printf ("%c\n", c) ;
+			1: c = 97 'a'
+			(gdb) n
+			a
+			8         while (c != EOF)
+			1: c = 97 'a'
+			(gdb) n
+			9         if (isalnum (c) )
+			1: c = 97 'a'
+			(gdb) n
+			10         printf ("%c\n", c) ;
+			1: c = 97 'a'
+			(gdb) n
+			a
+			8         while (c != EOF)
+			1: c = 97 'a'
+			(gdb) n
+			9         if (isalnum (c) )
+			1: c = 97 'a'
+			(gdb) n
+			10         printf ("%c\n", c) ;
+			1: c = 97 'a'
+			(gdb) n
+			a
+			8         while (c != EOF)
+			1: c = 97 'a'
+			(gdb) quit
+			A debugging session is active.
+
+			        Inferior 1 [process 10613] will be killed.
+
+					  Quit anyway? (y or n) y
+					  dmp394@tux5 ~/CS283/Git/Labs/1/help/
+					  $ echo "keeps printing first character becuase we never get the next one."
+					  keeps printing first character becuase we never get the next one.
+					  dmp394@tux5 ~/CS283/Git/Labs/1/help/
+					  $ vi g1.c
+					  dmp394@tux5 ~/CS283/Git/Labs/1/help/
+					  $ cc g1.c
+					  dmp394@tux5 ~/CS283/Git/Labs/1/help/
+					  $ ./a.out
+					  dfhg123
+					  d
+					  f
+					  h
+					  g
+					  1
+					  2
+					  3
+

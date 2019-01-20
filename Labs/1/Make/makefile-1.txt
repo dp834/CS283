@@ -35,5 +35,5 @@ three.o: one.h three.c
 
 #run with make clean
 clean:
-#removes all files with .o (needed for build but nothing not for anything later)
+#removes all files with .o (needed for build but not for anything later)
 	rm -f one *.o

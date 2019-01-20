@@ -14,7 +14,11 @@ ${PROG}: ${OBJS}
 #compile with flags using dependencies to output name
 	${CC} ${LDFLAGS} ${OBJS} -o ${PROG}
 
+#.c.o is implied and a builtin so everything should compile
+
+
 #cleans directory of .o files
 clean:
 #the ls is useless
+#if you want to remove exe
 	rm -f ls *.o
