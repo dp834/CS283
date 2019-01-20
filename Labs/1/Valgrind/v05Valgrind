@@ -1,0 +1,43 @@
+dmp394@tux5 ~/CS283/Git/Labs/1/Valgrind/
+$ gcc -mtune=opteron -g -march=x86-64 v05.c
+dmp394@tux5 ~/CS283/Git/Labs/1/Valgrind/
+$ valgrind --tool=memcheck --leak-check=yes ./a.out
+==11018== Memcheck, a memory error detector
+==11018== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==11018== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==11018== Command: ./a.out
+==11018==
+==11018== Conditional jump or move depends on uninitialised value(s)
+==11018==    at 0x108656: main (v05.c:6)
+==11018==
+X is zero==11018==
+==11018== HEAP SUMMARY:
+==11018==     in use at exit: 0 bytes in 0 blocks
+==11018==   total heap usage: 1 allocs, 1 frees, 1,024 bytes allocated
+==11018==
+==11018== All heap blocks were freed -- no leaks are possible
+==11018==
+==11018== For counts of detected and suppressed errors, rerun with: -v
+==11018== Use --track-origins=yes to see where uninitialised values come from
+==11018== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+dmp394@tux5 ~/CS283/Git/Labs/1/Valgrind/
+$ vi v05.c
+dmp394@tux5 ~/CS283/Git/Labs/1/Valgrind/
+$ gcc -mtune=opteron -g -march=x86-64 v05.c
+dmp394@tux5 ~/CS283/Git/Labs/1/Valgrind/
+$ valgrind --tool=memcheck --leak-check=yes ./a.out
+==11035== Memcheck, a memory error detector
+==11035== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==11035== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==11035== Command: ./a.out
+==11035==
+X is zero==11035==
+==11035== HEAP SUMMARY:
+==11035==     in use at exit: 0 bytes in 0 blocks
+==11035==   total heap usage: 1 allocs, 1 frees, 1,024 bytes allocated
+==11035==
+==11035== All heap blocks were freed -- no leaks are possible
+==11035==
+==11035== For counts of detected and suppressed errors, rerun with: -v
+==11035== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+dmp394@tux5 ~/CS283/Git/Labs/1/Valgrind/

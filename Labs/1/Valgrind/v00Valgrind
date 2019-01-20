@@ -1,0 +1,64 @@
+dmp394@tux5 ~/CS283/Git/Labs/1/Valgrind/
+$ gcc -mtune=opteron -g -march=x86-64 v00.c
+dmp394@tux5 ~/CS283/Git/Labs/1/Valgrind/
+$ ls
+a.out  compile.txt  v00.c  v05.c  v06.c
+dmp394@tux5 ~/CS283/Git/Labs/1/Valgrind/
+$ valgrind --tool=memcheck --leak-check=yes ./a.out
+==10971== Memcheck, a memory error detector
+==10971== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==10971== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==10971== Command: ./a.out
+==10971==
+==10971== Invalid write of size 4
+==10971==    at 0x108668: f (v00.c:7)
+==10971==    by 0x10867E: main (v00.c:12)
+==10971==  Address 0x522d068 is 0 bytes after a block of size 40 alloc'd
+==10971==    at 0x4C2FB0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10971==    by 0x10865B: f (v00.c:6)
+==10971==    by 0x10867E: main (v00.c:12)
+==10971==
+==10971==
+==10971== HEAP SUMMARY:
+==10971==     in use at exit: 40 bytes in 1 blocks
+==10971==   total heap usage: 1 allocs, 0 frees, 40 bytes allocated
+==10971==
+==10971== 40 bytes in 1 blocks are definitely lost in loss record 1 of 1
+==10971==    at 0x4C2FB0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10971==    by 0x10865B: f (v00.c:6)
+==10971==    by 0x10867E: main (v00.c:12)
+==10971==
+==10971== LEAK SUMMARY:
+==10971==    definitely lost: 40 bytes in 1 blocks
+==10971==    indirectly lost: 0 bytes in 0 blocks
+==10971==      possibly lost: 0 bytes in 0 blocks
+==10971==    still reachable: 0 bytes in 0 blocks
+==10971==         suppressed: 0 bytes in 0 blocks
+==10971==
+==10971== For counts of detected and suppressed errors, rerun with: -v
+==10971== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+dmp394@tux5 ~/CS283/Git/Labs/1/Valgrind/
+$ vi v00.c
+dmp394@tux5 ~/CS283/Git/Labs/1/Valgrind/
+$ gcc -mtune=opteron -g -march=x86-64 v00.
+gcc: error: v00.: No such file or directory
+gcc: fatal error: no input files
+compilation terminated.
+dmp394@tux5 ~/CS283/Git/Labs/1/Valgrind/
+$ gcc -mtune=opteron -g -march=x86-64 v00.c
+dmp394@tux5 ~/CS283/Git/Labs/1/Valgrind/
+$ valgrind --tool=memcheck --leak-check=yes ./a.out
+==11005== Memcheck, a memory error detector
+==11005== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==11005== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==11005== Command: ./a.out
+==11005==
+==11005==
+==11005== HEAP SUMMARY:
+==11005==     in use at exit: 0 bytes in 0 blocks
+==11005==   total heap usage: 1 allocs, 1 frees, 40 bytes allocated
+==11005==
+==11005== All heap blocks were freed -- no leaks are possible
+==11005==
+==11005== For counts of detected and suppressed errors, rerun with: -v
+==11005== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
