@@ -1,0 +1,9 @@
+the fd stack starts with 0 1 2 filled for stdin stdout and stderr
+opening fd1 gives it next number available so 3
+opening fd2 gives it next number available so 4
+closing fd2 gives its number back to fd stack so 4 can be used again
+opening fd2 again gives it the next number available so 4 again
+
+program will print 
+fd2 = 4
+
