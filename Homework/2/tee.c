@@ -4,7 +4,6 @@
 int main(int argc, char *argv[]){
 	// -a option appends, no option overwrites
 	int aFlag = 0;
-	char * filenames;
 	int i, returnCheck;
 	int *fds;
 	for(i = 1; i< argc; i++){
@@ -37,5 +36,10 @@ int main(int argc, char *argv[]){
 			write(fds[i], buffer, size);
 		}
 	}
+	for(i=0; i < sizeof(fds); i++){
+		close(fds[i]);
+	}
+	free(fds);
+
 	return 0;
 }
