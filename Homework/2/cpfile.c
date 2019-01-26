@@ -3,7 +3,7 @@
 int main(int argc, char **argv) {
 	int n;
 	rio_t rio;
-	char buf[MAXLINE];
+	char buf[RIO_BUFSIZE];
 	int fd;
 
 	if (argc == 2) {
@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
 	}
 
 	Rio_readinitb(&rio, STDIN_FILENO);
-	while((n = Rio_readlineb(&rio, buf, MAXLINE)) != 0) {
+	while((n = Rio_readlineb(&rio, buf, RIO_BUFSIZE)) != 0) {
 		Rio_writen(STDOUT_FILENO, buf, n);
 	}
 }
