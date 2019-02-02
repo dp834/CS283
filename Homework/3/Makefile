@@ -1,22 +1,21 @@
 CC	= gcc
-CFLAGS = -Wall -Og -I $(CSAPP_INC) -I . 
-LDLIBS = -lpthread
+CFLAGS = -Wall -g -Og -I $(CSAPP_INC) -I  
 PROG=pfa
+ORIGINAL_TEXT=originalText
+MODIFIED_TEXT=testText.txt
 
 
 all: homework3
 
-homework3: homework3.c csapp.o
-	$(CC) -o $(PROG) $< csapp.o $(LDFLAGS) $(LDLIBS)
+homework3: homework3.c 
+	$(CC) -o $(PROG) $< $(CFLAGS)
 
-csapp.o: csapp.c
-	$(CC) -c csapp.c
-
-rio_cat: rio_cat.c csapp.o
-	$(CC) -o rio_cat rio_cat.c csapp.o $(LDFLAGS) $(LDLIBS)
-
-%: %.c csapp.o
-	$(CC) -o $@ $< csapp.o $(LDFLAGS) $(LDLIBS)
+test: homework3
+	@cp $(ORIGINAL_TEXT) $(MODIFIED_TEXT) 
+	./$(PROG) test to prefixParam
+#	@echo "\n\n---------------------------------------------"
+#	@cat $(MODIFIED_TEXT) 
+	diff $(MODIFIED_TEXT) $(ORIGINAL_TEXT)
 
 clean: 
-	\rm $(PROG) *.o
+	-@\rm $(PROG) *.o $(MODIFIED_TEXT) 2> /dev/null || true
