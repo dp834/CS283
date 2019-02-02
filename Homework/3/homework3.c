@@ -19,7 +19,7 @@ void replaceInFile(FILE*, char*, char*, char*);
 
 int main(int argc, char *argv[]){
 
-	FILE *files;
+	FILE *file;
 	char *find, *replace, *prefix, *currentFileName;
 	DIR *directory;
 	struct dirent *dirData;
@@ -44,33 +44,34 @@ int main(int argc, char *argv[]){
 		if(!isTXTFile(currentFileName)){
 			continue;
 		}
-		printf("In opening file: %s\n", currentFileName);
-		files = fopen(currentFileName, "r+");
+		printf("Opening file: %s\n", currentFileName);
+		file = fopen(currentFileName, "r+");
 
-		if(!files){
+		if(!file){
 			perror("Error opening file");
 			return 1;
 		}
 
-		switch(preSearch(files, find, prefix)){
+		switch(preSearch(file, find, prefix)){
 			case(FIND_FOUND):
-				printf("Replacing find with replace\n");
-				replaceInFile(files, find, replace, currentFileName);
+				printf("Replacing '%s' with '%s'\n", find, replace);
+				replaceInFile(file, find, replace, currentFileName);
 				break;
 			case(PREFIX_FOUND):
-				printf("Prepending prefix with find\n");
-				prependInFile(files, prefix, find, currentFileName);
+				printf("Prepending '%s' with '%s'\n", prefix, find);
+				prependInFile(file, prefix, find, currentFileName);
 				break;
 			case(NON_FOUND):
-				printf("Did not find any prefix or find\n");
+				printf("Did not find '%s' or '%s'\n", find, prefix);
 				break;
 			default:
 				perror("preSearch returned unknown error\n");
 				return 4;
 		}
+
+		fclose(file);
 	}
 	closedir(directory);
-	//free everything
 	return 0;
 }
 
@@ -94,15 +95,12 @@ int preSearch(FILE* file, char *find, char *prefix){
 		}
 	}
 	free(buffer);
-	if(searchResult){
-		free(searchResult);
-	}
 	return (prefixFound)? PREFIX_FOUND : NON_FOUND;
 }
 
 void prependInFile(FILE *file, char *prefix, char *find, char *originalFileName){
 	rewind(file);
-	char *tempFileName = "homework3.tempFile";
+	char *tempFileName = ".homework3.tempFile";
 	FILE *tempFile = fopen(tempFileName, "w+");
 	if(!tempFile){
 		perror("Couldnt' open temp file");
@@ -110,9 +108,9 @@ void prependInFile(FILE *file, char *prefix, char *find, char *originalFileName)
 	}
 
 	char *buffer = NULL;
-	int i, j;
+	int i, j, currentLine;
 	long unsigned int bufferLen = 0;
-
+	currentLine = 1;
 	while(getline(&buffer, &bufferLen, file) != -1){
 		if(!buffer){
 			perror("getlineFailed");
@@ -120,6 +118,7 @@ void prependInFile(FILE *file, char *prefix, char *find, char *originalFileName)
 		}
 		for(i = 0; buffer[i] != '\0'; i++){
 			if(!strncmp(prefix, buffer + i, strlen(prefix))){
+				printf("Found '%s' on line %d, prepending with '%s'\n", prefix, currentLine, find);
 				for(j = 0; j < strlen(find); j++){
 					putc(find[j], tempFile);
 				}
@@ -127,6 +126,7 @@ void prependInFile(FILE *file, char *prefix, char *find, char *originalFileName)
 				putc(buffer[i], tempFile);
 			}
 		}
+		currentLine++;
 	}
 	rename(tempFileName, originalFileName);	
 }
@@ -134,7 +134,7 @@ void prependInFile(FILE *file, char *prefix, char *find, char *originalFileName)
 
 void replaceInFile(FILE* file, char *find, char *replace, char *originalFileName){
 	rewind(file);
-	char *tempFileName = "homework3.tempFile";
+	char *tempFileName = ".homework3.tempFile";
 	FILE *tempFile = fopen(tempFileName, "w+");
 	if(!tempFile){
 		perror("Couldnt' open temp file");
@@ -142,9 +142,9 @@ void replaceInFile(FILE* file, char *find, char *replace, char *originalFileName
 	}
 
 	char *buffer = NULL;
-	int i, j;
+	int i, j, currentLine;
 	long unsigned int bufferLen = 0;
-
+	currentLine = 1;
 	while(getline(&buffer, &bufferLen, file) != -1){
 		if(!buffer){
 			perror("getlineFailed");
@@ -152,6 +152,7 @@ void replaceInFile(FILE* file, char *find, char *replace, char *originalFileName
 		}
 		for(i = 0; buffer[i] != '\0'; i++){
 			if(!strncmp(find, buffer + i, strlen(find))){
+				printf("Found '%s' on line %d, replacing with '%s'\n", find, currentLine, replace);
 				for(j = 0; j < strlen(replace); j++){
 					putc(replace[j], tempFile);
 				}
@@ -160,6 +161,7 @@ void replaceInFile(FILE* file, char *find, char *replace, char *originalFileName
 				putc(buffer[i], tempFile);
 			}
 		}
+		currentLine++;
 	}
 	rename(tempFileName, originalFileName);	
 }

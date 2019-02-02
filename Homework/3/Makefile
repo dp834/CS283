@@ -15,7 +15,7 @@ test: homework3
 	./$(PROG) test to prefixParam
 #	@echo "\n\n---------------------------------------------"
 #	@cat $(MODIFIED_TEXT) 
-	diff $(ORIGINAL_TEXT) $(MODIFIED_TEXT) || true
+#	diff $(ORIGINAL_TEXT) $(MODIFIED_TEXT) || true
 
 clean: 
 	-@\rm $(PROG) *.o $(MODIFIED_TEXT) 2> /dev/null || true
