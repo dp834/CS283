@@ -39,11 +39,12 @@ int main(int argc, char *argv[]){
 		perror("Couldn't open directory");
 		return 8;
 	}
-	while(!(dirData = readdir(directory))){
+	while((dirData = readdir(directory)) != NULL){
 		currentFileName = dirData->d_name;
 		if(!isTXTFile(currentFileName)){
-
+			continue;
 		}
+		printf("In opening file: %s\n", currentFileName);
 		files = fopen(currentFileName, "r+");
 
 		if(!files){
@@ -68,7 +69,8 @@ int main(int argc, char *argv[]){
 				return 4;
 		}
 	}
-
+	closedir(directory);
+	//free everything
 	return 0;
 }
 
@@ -163,5 +165,5 @@ void replaceInFile(FILE* file, char *find, char *replace, char *originalFileName
 }
 
 int isTXTFile(char* file){
-	return( strncmp(file + strlen(file) - 4, ".txt", 4));
+	return !(strncmp(file + strlen(file) - 4, ".txt", 4));
 }
