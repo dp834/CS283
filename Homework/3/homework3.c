@@ -44,7 +44,7 @@ int main(int argc, char *argv[]){
 		if(!isTXTFile(currentFileName)){
 			continue;
 		}
-		printf("Opening file: %s\n", currentFileName);
+		printf("\n-----------------------------------------------\nOpening file: %s\n", currentFileName);
 		file = fopen(currentFileName, "r+");
 
 		if(!file){
@@ -122,9 +122,8 @@ void prependInFile(FILE *file, char *prefix, char *find, char *originalFileName)
 				for(j = 0; j < strlen(find); j++){
 					putc(find[j], tempFile);
 				}
-			}else{ 
-				putc(buffer[i], tempFile);
 			}
+			putc(buffer[i], tempFile);
 		}
 		currentLine++;
 	}
