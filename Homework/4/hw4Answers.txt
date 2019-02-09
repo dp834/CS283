@@ -1,0 +1,40 @@
+8.11)
+when i = 0 we only have the parent process which forks. We now have 2 processes running with i = 1.
+Each of these (1 child and the parent) will fork so we will have 4 total processes. I will be 2 and leave the loop.
+All four processes will print the "hello\n" 
+
+hello will print 4 times
+
+8.12)
+Parent runs into the doit() function, hits first fork. Have parent and child each calls fork again so 4 processes again. Each of the 4 will print "hello" then return to main where they will all print "hello\n" again.
+
+hello will print 8 times
+
+8.13)
+Parent process initialized x to be 3 and calls fork. Parent will enter the true part of the if statement where it will increment its own x and then print it (x=4) then leave the if statement and decrement x and print (x=3). The child skips the if statement as Fork will return 0 for itself. it will then go the the decrement and print statement (x=2)
+Only requirement is that the x=4 prints before the x=3
+One possible output
+
+x=4
+x=2
+x=3
+
+
+8.14)
+Parent process enters doit() and forks. Parent will not enter the if statement and will return and then print hello from the main loop.
+The child that is spawned will enter the if statment and fork again so 2 children are in the if statement which will each print "hello" before calling exit terminating their program.
+
+hello will print 3 times
+
+8.16)
+counter = 1 is a global variable.
+Parent enters main and calls fork, child process enters the if statment, decrements its own copy of counter and exits. The child had no effect on the parent's data. The parent goes into the if statement and waits for the child to die before printing ++counter. The ++counter will increment counter and then use it so counter will be 2 when it prints. Then the parent exits 
+output:
+counter = 2
+
+
+8.23)
+Parent binds its handler function to trigger when SIGUSR2 is called and creates one child and waits for the child to die before continuing. 
+The child will send the parent the SIGUSR2 signal which will trigger the handler function for the parent. The parent will then increment the counter and sleep for 1 second. While the parent is asleep the child will send 4 more SIGUSR2 signals to the parent which will all sit in the pending singal buffer each setting the same bit to true. The child will then die after sending all the signals. The parent will not handle the signal while it is currently handling the signal of the same type. When the parent's sleep finally ends it will leave the handler and see that there is a pending signal in the signal buffer which will trigger the handler a second time. The counter will increment again and the parent will sleep for another second. When it awakes from this it will return to main and see that its child has died continue to print that the counter is 2.
+The counter will continue to print 2 until the child sends enough signals to span over multiple seconds.
+

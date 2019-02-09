@@ -11,3 +11,5 @@ csapp.o: csapp.c
 rio_cat: rio_cat.c csapp.o
 	$(CC) -o rio_cat rio_cat.c csapp.o $(LDFLAGS) $(LDLIBS)
 
+test: test.c csapp.o
+	$(CC) -o test test.c csapp.o $(LDLIBS) $(LDLIBS)

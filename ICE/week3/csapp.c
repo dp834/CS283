@@ -674,7 +674,7 @@ ssize_t rio_readlineb(rio_t *rp, void *usrbuf, size_t maxlen)
 	    return -1;	  /* error */
     }
 	 printf("n=%3d\n", n);
-	 fflush(stdout);
+	 //fflush(stdout);
     *bufp = 0;
     return n;
 }
