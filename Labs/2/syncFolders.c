@@ -9,7 +9,8 @@ int main(int argc, char **argv){
 	}
 
 	DIR *dirA, *dirB;
-	struct dirent *dirDataA, *dirDataB;
+	struct dirent *dirDataA; 
+	struct dirent *dirDataB;
 
 	printf("Folder A: %s\nFolder B: %s\n", argv[1], argv[2]);
 
