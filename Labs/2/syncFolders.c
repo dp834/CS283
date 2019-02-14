@@ -41,14 +41,21 @@ int main(int argc, char **argv){
 	fileCountA--;
 	fileCountB--;
 
-	while(fileCountA && fileCountB){
+	char *tempStringFreeAfterUse;
+
+	while(fileCountA > -1 && fileCountB > -1){
+		//printf("looking at files A: %s\n                 B: %s\n", dirDataA[fileCountA]->d_name, dirDataB[fileCountB]->d_name);
 		switch(compareFiles(dirDataA[fileCountA]->d_name, dirDataB[fileCountB]->d_name)){
 			case(IN_A_NOT_B):
-				copyFile(joinFolderFile(argv[1], dirDataA[fileCountA]->d_name), argv[2]);
+				tempStringFreeAfterUse = joinFolderFile(argv[1], dirDataA[fileCountA]->d_name);
+				copyFile(tempStringFreeAfterUse, argv[2]);
+				free(tempStringFreeAfterUse);
 				free(dirDataA[fileCountA--]);
 				break;
 			case(IN_B_NOT_A):
-				deleteFile(joinFolderFile(argv[2], dirDataB[fileCountB]->d_name));
+				tempStringFreeAfterUse = joinFolderFile(argv[2], dirDataB[fileCountB]->d_name);
+				deleteFile(tempStringFreeAfterUse);
+				free(tempStringFreeAfterUse);
 				free(dirDataB[fileCountB--]);
 				break;
 			case(SAME_NAME):
@@ -62,12 +69,12 @@ int main(int argc, char **argv){
 		}
 	}
 
-	while(fileCountA){//Files are only in A
+	while(fileCountA > -1){//Files are only in A
 		copyFile(joinFolderFile(argv[1], dirDataA[fileCountA]->d_name), argv[2]);
 		free(dirDataA[fileCountA--]);
 	}
 
-	while(fileCountB){//Files are only in B
+	while(fileCountB > -1){//Files are only in B
 		deleteFile(joinFolderFile(argv[2], dirDataB[fileCountB]->d_name));
 		free(dirDataB[fileCountB--]);
 	}
@@ -81,7 +88,7 @@ int filterHiddenFiles(const struct dirent *dir){
 }
 
 int compareFiles(char *fileA, char *fileB){
-	int cmpReturn = strcmp( fileA, fileB);
+	int cmpReturn = strcmp(fileA, fileB);
 	if(cmpReturn > 0){
 		return IN_A_NOT_B;
 	}else if(cmpReturn < 0){
@@ -101,7 +108,7 @@ void compareTimestampAndCopy(char *folderA, char *fileA, char *folderB, char *fi
 		printf("Stat failed");
 	}
 
-	joinedB= joinFolderFile(folderB, fileB);
+	joinedB = joinFolderFile(folderB, fileB);
 	if(stat(joinedB, &statB) < 0){
 		printf("Stat failed");
 	}
