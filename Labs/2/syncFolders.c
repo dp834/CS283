@@ -70,12 +70,16 @@ int main(int argc, char **argv){
 	}
 
 	while(fileCountA > -1){//Files are only in A
-		copyFile(joinFolderFile(argv[1], dirDataA[fileCountA]->d_name), argv[2]);
+		tempStringFreeAfterUse = joinFolderFile(argv[1], dirDataA[fileCountA]->d_name);
+		copyFile(tempStringFreeAfterUse, argv[2]);
+		free(tempStringFreeAfterUse);
 		free(dirDataA[fileCountA--]);
 	}
 
 	while(fileCountB > -1){//Files are only in B
-		deleteFile(joinFolderFile(argv[2], dirDataB[fileCountB]->d_name));
+		tempStringFreeAfterUse = joinFolderFile(argv[2], dirDataB[fileCountB]->d_name);
+		deleteFile(tempStringFreeAfterUse);
+		free(tempStringFreeAfterUse);
 		free(dirDataB[fileCountB--]);
 	}
 	free(dirDataB);
@@ -114,9 +118,9 @@ void compareTimestampAndCopy(char *folderA, char *fileA, char *folderB, char *fi
 	}
 
 	if(difftime(statA.st_mtime, statB.st_mtime) < 0){
-		copyFile(joinedB, joinedA);
+		copyFile(joinedB, folderA);
 	}else{
-		copyFile(joinedA, joinedB);
+		copyFile(joinedA, folderB);
 	}
 	free(joinedA);
 	free(joinedB);
