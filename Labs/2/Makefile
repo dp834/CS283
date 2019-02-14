@@ -1,5 +1,5 @@
 CC	= gcc
-CFLAGS = -Wall -Og 
+CFLAGS = -Wall -Og  -g
 LDLIBS = -lpthread
 PROG = lab2
 FOLDER_A_ORIG = origA
@@ -20,15 +20,18 @@ syncFolders: syncFolders.c csapp.o
 	$(CC) -o $(PROG) $< csapp.o $(CFLAGS) $(LDFLAGS) $(LDLIBS)
 
 test: syncFolders
-	-@rm $(FOLDER_A) 2> /dev/null || true
-	-@rm $(FOLDER_B) 2> /dev/null || true
-	-@cp -r $(FOLDER_A_ORIG) $(FOLDER_A)
-	-@cp -r $(FOLDER_B_ORIG) $(FOLDER_B)
+	-@rm -rf $(FOLDER_A) 2> /dev/null || true
+	-@rm -rf $(FOLDER_B) 2> /dev/null || true
+	-@mkdir $(FOLDER_A) $(FOLDER_B)
+	-@cp -p $(FOLDER_A_ORIG)/* $(FOLDER_A)
+	-@cp -p $(FOLDER_B_ORIG)/* $(FOLDER_B)
 	-@echo "---------------------------------------------------"
 	./$(PROG) $(FOLDER_A) $(FOLDER_B)
+	-@echo "---------------------------------------------------"
+	diff --brief -r $(FOLDER_A) $(FOLDER_B)
 
 %: %.c csapp.o
 	$(CC) -o $@ $< csapp.o $(CFLAGS) $(LDFLAGS) $(LDLIBS)
 
 clean:
-	-@\rm *.o  *.gch $(PROG) $(FOLDER_A) $(FOLDER_B) 2> /dev/null || true
+	-@\rm -r *.o  *.gch $(PROG) $(FOLDER_A) $(FOLDER_B) 2> /dev/null || true
