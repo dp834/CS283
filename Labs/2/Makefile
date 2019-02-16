@@ -1,10 +1,10 @@
 CC	= gcc
 CFLAGS = -Wall -Og  -g
 PROG = lab2
-FOLDER_A_ORIG = origA
-FOLDER_B_ORIG = origB
-FOLDER_A = testFolder1
-FOLDER_B = testFolder2
+FOLDER_A_ORIG = finalTestA
+FOLDER_B_ORIG = finalTestB
+FOLDER_A = a 
+FOLDER_B = b
 
 
 all: syncFolders 
