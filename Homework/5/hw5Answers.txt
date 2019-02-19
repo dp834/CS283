@@ -1,0 +1,6 @@
+8.23)
+Parent binds its handler function to trigger when SIGUSR2 is called and creates one child and waits for the child to die before continuing.
+The child will send the parent the SIGUSR2 signal which will trigger the handler function for the parent. The parent will then increment the counter and sleep for 1 second. While the parent is asleep the child will send 4 more SIGUSR2 signals to the parent which will all sit in the pending singal buffer each setting the same bit to true. The child will then die after sending all the signals. The parent will not handle the signal while it is currently handling the signal of the same type. When the parent's sleep finally ends it will leave the handler and see that there is a pending signal in the signal buffer which will trigger the handler a second time. The counter will increment again and the parent will sleep for another second. When it awakes from this it will return to main and see that its child has died continue to print that the counter is 2.
+The counter will continue to print 2 until the child sends enough signals to span over multiple seconds.
+
+
