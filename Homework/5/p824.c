@@ -6,8 +6,7 @@ int main() {
 	pid_t pid;  /* Parent creates N children */
 	for (i = 0; i < N; i++){ 
 		if ((pid = Fork()) == 0){ /* child */ 
-			*(char *) 0 = 0;
-			//raise(SIGSEGV);
+			*(char *) 0 = 0; //tries to write to memory address 0. Will trigger seg fault
 			exit(100+i);  /* Parent reaps N children in no particular order */
 		}
 	}

@@ -15,8 +15,7 @@ int main() {
 			if(i == 0){//set segfault handler for only the first child
 				signal(SIGSEGV, childSegFaultHandler);
 			}
-			*(char *) 0 = 0;
-			//raise(SIGSEGV);
+			*(char *) 0 = 0;//tries to write memory to location 0, will trigger seg fault
 			exit(100+i);  /* Parent reaps N children in no particular order */
 		}
 	}
