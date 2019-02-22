@@ -6,7 +6,6 @@ LDLIBS = -lpthread
 
 all: p824 p824-2
 
-
 csapp.o: csapp.c
 	$(CC) -c csapp.c
 
