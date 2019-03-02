@@ -16,14 +16,14 @@ int main(int argc, char** argv){
 	port = atoi(argv[2]);
 
 	clientfd = Open_clientfd(host, port);
-	Rio_readinitb(&rio, clientfd);
+	rio_readinitb(&rio, clientfd);
 	createRequest(buf, host, argv[2], argv[3]);
 
-	Rio_writen(clientfd, buf, strlen(buf));	
+	rio_writen(clientfd, buf, strlen(buf));	
 	rio_writen(1,buf,strlen(buf));		
 	int n;
 
-	while((n = Rio_readlineb(&rio, buf, MAXLINE)) > 0){
+	while((n = rio_readlineb(&rio, buf, MAXLINE)) > 0){
 		rio_writen(1,buf,n);
 	}
 	printf("\n");
