@@ -1,3 +1,7 @@
+GET /Makefile HTTP/1.1
+Host: localhost
+Connection: close
+
 CC	= gcc
 CFLAGS = -Wall -Og -g -I $(CSAPP_INC) -I . 
 LDLIBS = -lpthread
@@ -25,3 +29,4 @@ test: server client
 
 clean:
 	\rm *.o client server
+
