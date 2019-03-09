@@ -10,7 +10,7 @@ p1217: p1217.c csapp.o
 	$(CC) -o $@ $< csapp.o $(LDFLAGS) $(LDLIBS)
 	./$@
 
-hello-hw: hello-hw.c
+hello-hw: hello-hw.c csapp.o
 	$(CC) -o $@ $< csapp.o $(LDFLAGS) $(LDLIBS)
 	./$@
 

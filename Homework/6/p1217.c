@@ -1,10 +1,10 @@
 /**
 	A:
-	Nothing prints because the program will exit which kills the thread that spawned. The main program will exit while the thread is sleeping. The thread will exit when the parent exits so it will never print.
+	Nothing prints because the program will exit which kills the thread that it spawned. The main program will exit while the thread is sleeping. The thread will exit when the parent exits so it will never print.
 	
 	B:
 	Pthread_join(tid, NULL);
-	Pthread_exit(0);	
+	Pthread_exit(NULL);	
 
  **/
 

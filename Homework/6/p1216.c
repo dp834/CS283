@@ -19,6 +19,7 @@ int main(int argc, char**argv){
 	for(i = 0; i < count; i++){
 		Pthread_join(tid[i],NULL);
 	}
+	free(tid);
 	exit(0);
 }
 
