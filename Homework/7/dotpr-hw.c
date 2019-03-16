@@ -12,27 +12,27 @@ double big_sum;
 int veclen;
 
 void *dotprod(void *arg){
-	int index = *((int *) arg);//cast to int pointer and dereference, makes compiler happy
+	long index = *((long *) arg);//cast to int pointer and dereference, makes compiler happy
+	//free memory once we have a copy
 	free(arg);
 	double *x;
 	double *y;
-	printf("Thread: %d\n", index);
-	/* ... */
+	//set arrays
 	x = array_a;
 	y = array_b;
-	/* ... */
+
+	//create a sum variable to return
 	double *mysum = malloc(sizeof(double));
 	*mysum = 0;
+	//set start and end data
 	int i, start, end;
 	start = index*VECLEN;
 	end   = start + VECLEN;
-	
+	//loop through start and end and mutiply a*b for the dot product
 	for (i=start; i<end ; i++){
 		(*mysum) += (x[i] * y[i]);
 	}
-	/* ... */
-	/* ... */
-	printf("Sum: %f\n", *mysum);
+	//return the sum
 	pthread_exit(mysum);
 }
 
@@ -44,7 +44,6 @@ int main (int argc, char *argv[]){
 	b = (double*) malloc (NUMTHRDS*VECLEN*sizeof(double));
 	for (i=0; i<VECLEN*NUMTHRDS; i++){
 		a[i]=1;
-		//a[i] = i;
 		b[i]=a[i];
 	}
 	veclen = VECLEN;
@@ -59,17 +58,23 @@ int main (int argc, char *argv[]){
 			The offset is specified by 'i'. The size of
 			the data for each thread is indicated by VECLEN.
 		 */
-		int *copy = malloc(sizeof(int));
+		//pass copy of index to thread
+		long *copy = malloc(sizeof(long));
 		*copy = i;
 		pthread_create(&callThd[i], NULL, dotprod, (void *) copy);
 	}
 
+	//used to get return value
 	double *tempSum;
 	for(i=0; i<NUMTHRDS; i++){
+		//join to each thread and get return value
 		pthread_join(callThd[i], (void **) &tempSum);
+		//add sub sums to the large sum
 		big_sum += *tempSum;
+		//free the malloc from the thread
 		free(tempSum);
 	}
+	//pring sum 
 	printf ("Sum = %f \n", big_sum);
 	free (a);
 	free (b);

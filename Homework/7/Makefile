@@ -1,5 +1,5 @@
 CC	= gcc
-CFLAGS = -Wall -Og -g -I $(CSAPP_INC) -I . 
+CFLAGS = -Wall -Og -g -I . 
 LDLIBS = -lpthread
 
 .PHONY:all
@@ -7,14 +7,14 @@ LDLIBS = -lpthread
 all: dotpr-hw
 
 dotpr-hw: dotpr-hw.c csapp.o
-	$(CC) -o $@ $< csapp.o $(LDFLAGS) $(LDLIBS)
+	$(CC) -o $@ $< csapp.o $(LDFLAGS) $(LDLIBS) $(CFLAGS)
 
 csapp.o: csapp.c
 	$(CC) -c csapp.c
 
 %: %.c csapp.o
-	$(CC) -o $@ $< csapp.o $(LDFLAGS) $(LDLIBS)
+	$(CC) -o $@ $< csapp.o $(LDFLAGS) $(LDLIBS) 
 	./$@
 
 clean:
-	\rm *.o  p1217 p1216 hello-hw
+	\rm *.o dotpr-hw 
